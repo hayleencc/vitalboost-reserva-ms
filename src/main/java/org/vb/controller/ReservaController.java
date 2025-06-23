@@ -42,4 +42,13 @@ public class ReservaController {
     public List<ReservaResponseDTO> getAllReservasPorCliente(@PathVariable UUID cliente_id) {
         return reservaService.getReservasPorCliente(cliente_id);
     }
+
+    @Operation(summary = "Listar reservas de un entrenador")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reservas del entrenador recuperadas correctamente")
+    })
+    @GetMapping("/entrenador/{entrenador_id}")
+    public List<ReservaResponseDTO> getAllReservasPorEntrenador(@PathVariable UUID entrenador_id) {
+        return reservaService.getReservasPorEntrenador(entrenador_id);
+    }
 }

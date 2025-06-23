@@ -16,5 +16,6 @@ public interface ReservaRepository extends JpaRepository<Reserva, UUID> {
     List<Reserva> buscarReservasExistentesConEntrenador(UUID entrenadorId, Instant fechaReserva);
 
     List<Reserva> findByClienteId(UUID clienteId);
+    List<Reserva> findByEntrenadorId(UUID entrenadorId);
 
 }

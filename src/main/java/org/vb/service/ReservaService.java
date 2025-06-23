@@ -41,4 +41,11 @@ public class ReservaService {
                 .map(reservaMapper::toResponseDTO)
                 .toList();
     }
+
+    public List<ReservaResponseDTO> getReservasPorEntrenador(UUID id) {
+        List<Reserva> reservas = reservaRepository.findByEntrenadorId(id);
+        return reservas.stream()
+                .map(reservaMapper::toResponseDTO)
+                .toList();
+    }
 }

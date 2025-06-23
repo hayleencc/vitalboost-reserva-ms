@@ -118,4 +118,33 @@ public class ReservaServiceTest {
         assertEquals(clienteId, result.get(0).getClienteId());
         verify(reservaRepository).findByClienteId(clienteId);
     }
+
+    @Test
+    void getReservasPorEntrenador_siNoExistenCreadas_retornaListaVacia() {
+        UUID entrenadorId = UUID.randomUUID();
+        List<Reserva> reservas = new ArrayList<>();
+        when(reservaRepository.findByEntrenadorId(entrenadorId)).thenReturn(reservas);
+
+        List<ReservaResponseDTO> result = reservaService.getReservasPorEntrenador(entrenadorId);
+
+        assertEquals(0, result.size());
+        verify(reservaRepository).findByEntrenadorId(entrenadorId);
+    }
+
+    @Test
+    void getReservasPorEntrenador_siExistenCreadas_retornaLista() {
+        UUID entrenadorId= TestDataFactory.ENTRENADOR_ID_FIJO;
+        Reserva reserva = TestDataFactory.createReservaEntity();
+        ReservaResponseDTO responseDTO = TestDataFactory.reservaResponseDTO();
+        List<Reserva> reservas = List.of(reserva);
+
+        when(reservaRepository.findByEntrenadorId(entrenadorId)).thenReturn(reservas);
+        when(reservaMapper.toResponseDTO(reserva)).thenReturn(responseDTO);
+        List<ReservaResponseDTO> result = reservaService.getReservasPorEntrenador(entrenadorId);
+
+
+        assertEquals(1, result.size());
+        assertEquals(entrenadorId, result.get(0).getEntrenadorId());
+        verify(reservaRepository).findByEntrenadorId(entrenadorId);
+    }
 }
