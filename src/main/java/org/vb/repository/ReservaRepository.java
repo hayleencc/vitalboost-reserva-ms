@@ -15,4 +15,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, UUID> {
     @Query("SELECT r FROM Reserva r WHERE r.entrenadorId = :entrenadorId AND r.fechaReserva = :fechaReserva AND (r.estado = 'CONFIRMADA' OR r.estado = 'PENDIENTE')")
     List<Reserva> buscarReservasExistentesConEntrenador(UUID entrenadorId, Instant fechaReserva);
 
+    List<Reserva> findByClienteId(UUID clienteId);
+    List<Reserva> findByEntrenadorId(UUID entrenadorId);
+
 }

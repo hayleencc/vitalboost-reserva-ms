@@ -14,8 +14,10 @@ import org.vb.model.entity.Reserva;
 import org.vb.repository.ReservaRepository;
 import org.vb.service.utils.TestDataFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -88,5 +90,61 @@ public class ReservaServiceTest {
         assertEquals(EstadoReserva.PENDIENTE.name(), reserva.getEstado());
     }
 
+    @Test
+    void getReservasPorCliente_siNoExistenCreadas_retornaListaVacia() {
+        UUID clienteId = UUID.randomUUID();
+        List<Reserva> reservas = new ArrayList<>();
+        when(reservaRepository.findByClienteId(clienteId)).thenReturn(reservas);
 
+        List<ReservaResponseDTO> result = reservaService.getReservasPorCliente(clienteId);
+
+        assertEquals(0, result.size());
+        verify(reservaRepository).findByClienteId(clienteId);
+    }
+
+    @Test
+    void getReservasPorCliente_siExistenCreadas_retornaLista() {
+        UUID clienteId= TestDataFactory.CLIENTE_ID_FIJO;
+        Reserva reserva = TestDataFactory.createReservaEntity();
+        ReservaResponseDTO responseDTO = TestDataFactory.reservaResponseDTO();
+        List<Reserva> reservas = List.of(reserva);
+
+        when(reservaRepository.findByClienteId(clienteId)).thenReturn(reservas);
+        when(reservaMapper.toResponseDTO(reserva)).thenReturn(responseDTO);
+        List<ReservaResponseDTO> result = reservaService.getReservasPorCliente(clienteId);
+
+
+        assertEquals(1, result.size());
+        assertEquals(clienteId, result.get(0).getClienteId());
+        verify(reservaRepository).findByClienteId(clienteId);
+    }
+
+    @Test
+    void getReservasPorEntrenador_siNoExistenCreadas_retornaListaVacia() {
+        UUID entrenadorId = UUID.randomUUID();
+        List<Reserva> reservas = new ArrayList<>();
+        when(reservaRepository.findByEntrenadorId(entrenadorId)).thenReturn(reservas);
+
+        List<ReservaResponseDTO> result = reservaService.getReservasPorEntrenador(entrenadorId);
+
+        assertEquals(0, result.size());
+        verify(reservaRepository).findByEntrenadorId(entrenadorId);
+    }
+
+    @Test
+    void getReservasPorEntrenador_siExistenCreadas_retornaLista() {
+        UUID entrenadorId= TestDataFactory.ENTRENADOR_ID_FIJO;
+        Reserva reserva = TestDataFactory.createReservaEntity();
+        ReservaResponseDTO responseDTO = TestDataFactory.reservaResponseDTO();
+        List<Reserva> reservas = List.of(reserva);
+
+        when(reservaRepository.findByEntrenadorId(entrenadorId)).thenReturn(reservas);
+        when(reservaMapper.toResponseDTO(reserva)).thenReturn(responseDTO);
+        List<ReservaResponseDTO> result = reservaService.getReservasPorEntrenador(entrenadorId);
+
+
+        assertEquals(1, result.size());
+        assertEquals(entrenadorId, result.get(0).getEntrenadorId());
+        verify(reservaRepository).findByEntrenadorId(entrenadorId);
+    }
 }
