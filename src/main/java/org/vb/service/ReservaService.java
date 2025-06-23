@@ -11,6 +11,7 @@ import org.vb.model.entity.Reserva;
 import org.vb.repository.ReservaRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ReservaService {
@@ -32,5 +33,12 @@ public class ReservaService {
         nuevoReserva.setEstado(EstadoReserva.PENDIENTE.name());
         Reserva reservaGuardado = reservaRepository.save(nuevoReserva);
         return reservaMapper.toResponseDTO(reservaGuardado);
+    }
+
+    public List<ReservaResponseDTO> getReservasPorCliente(UUID id) {
+        List<Reserva> reservas = reservaRepository.findByClienteId(id);
+        return reservas.stream()
+                .map(reservaMapper::toResponseDTO)
+                .toList();
     }
 }
