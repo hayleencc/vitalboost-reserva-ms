@@ -1,5 +1,6 @@
 package org.vb.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -14,10 +15,7 @@ import org.vb.model.entity.Reserva;
 import org.vb.repository.ReservaRepository;
 import org.vb.service.utils.TestDataFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -147,4 +145,38 @@ public class ReservaServiceTest {
         assertEquals(entrenadorId, result.get(0).getEntrenadorId());
         verify(reservaRepository).findByEntrenadorId(entrenadorId);
     }
+
+    @Test
+    void getReservaById_enviandoIdExistente_retornaReserva() {
+        UUID reservaId = TestDataFactory.RESERVA_ID;
+        Reserva reserva = TestDataFactory.createReservaEntity();
+        ReservaResponseDTO responseDTO = TestDataFactory.reservaResponseDTO();
+
+        when(reservaRepository.findById(reservaId)).thenReturn(Optional.of(reserva));
+        when(reservaMapper.toResponseDTO(reserva)).thenReturn(responseDTO);
+
+
+        ReservaResponseDTO result = reservaService.getReservaById(reservaId);
+
+        assertNotNull(result);
+        assertEquals(reservaId, result.getId());
+        assertEquals("PRESENCIAL", result.getModalidad());
+        verify(reservaRepository).findById(reservaId);
+        verify(reservaMapper).toResponseDTO(reserva);
+    }
+
+    @Test
+    void getReservaById_nonExistingId_shouldThrowException() {
+        UUID id = UUID.randomUUID();
+
+        when(reservaRepository.findById(id)).thenReturn(Optional.empty());
+
+        EntityNotFoundException exception = assertThrows(EntityNotFoundException.class, () -> {
+            reservaService.getReservaById(id);
+        });
+
+        assertTrue(exception.getMessage().contains(id.toString()));
+        verify(reservaRepository).findById(id);
+    }
+
 }

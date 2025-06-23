@@ -51,4 +51,15 @@ public class ReservaController {
     public List<ReservaResponseDTO> getAllReservasPorEntrenador(@PathVariable UUID entrenador_id) {
         return reservaService.getReservasPorEntrenador(entrenador_id);
     }
+
+    @Operation(summary = "Listar datos de una reserva por ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Reserva obtenido correctamente"),
+            @ApiResponse(responseCode = "404", description = "Reserva no encontrado")
+    })
+    @GetMapping("/{id}")
+    public ResponseEntity<ReservaResponseDTO> getReservaById(@PathVariable UUID id) {
+        ReservaResponseDTO reserva = reservaService.getReservaById(id);
+        return ResponseEntity.ok(reserva);
+    }
 }
