@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.vb.dto.request.CreateReservaDTO;
+import org.vb.dto.request.UpdateReservaDTO;
 import org.vb.dto.response.ReservaResponseDTO;
 import org.vb.enums.EstadoReserva;
 import org.vb.exception.HorarioNoDisponibleException;
@@ -179,4 +180,41 @@ public class ReservaServiceTest {
         verify(reservaRepository).findById(id);
     }
 
+    @Test
+    void updateReserva_enviandoIdExistente_retornaReservaActualizada() {
+        CreateReservaDTO dto = TestDataFactory.createReservaDTO();
+        Reserva existingReserva = TestDataFactory.createReservaEntity();
+        UpdateReservaDTO reservaUpdateDTO = TestDataFactory.updateReservaDTO();
+        UUID reservaId = existingReserva.getId();
+
+        when(reservaRepository.findById(reservaId)).thenReturn(Optional.of(existingReserva));
+        when(reservaRepository.save(any(Reserva.class))).thenAnswer(invocation -> invocation.getArgument(0));
+
+        doAnswer(invocation -> {
+            UpdateReservaDTO dtoArg = invocation.getArgument(0);
+            Reserva reservaArg = invocation.getArgument(1);
+
+            if (dtoArg.getEstado() != null) {
+                reservaArg.setEstado(dtoArg.getEstado().name());
+            }
+            return null;
+        }).when(reservaMapper).updateReservaFromDto(any(UpdateReservaDTO.class), any(Reserva.class));
+
+        ReservaResponseDTO expectedResponseDTO = new ReservaResponseDTO();
+        expectedResponseDTO.setId(reservaId);
+        expectedResponseDTO.setEstado(reservaUpdateDTO.getEstado().name());
+
+        when(reservaMapper.toResponseDTO(any(Reserva.class))).thenReturn(expectedResponseDTO);
+
+        ReservaResponseDTO result = reservaService.updateReserva(reservaId, reservaUpdateDTO);
+
+        assertNotNull(result);
+        assertEquals(reservaId, result.getId());
+        assertEquals(EstadoReserva.TERMINADA.name(), result.getEstado());
+
+        verify(reservaRepository).findById(reservaId);
+        verify(reservaMapper).updateReservaFromDto(eq(reservaUpdateDTO), any(Reserva.class));
+        verify(reservaRepository).save(any(Reserva.class));
+        verify(reservaMapper).toResponseDTO(any(Reserva.class));
+    }
 }

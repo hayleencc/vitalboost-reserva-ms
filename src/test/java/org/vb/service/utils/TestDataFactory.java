@@ -1,7 +1,9 @@
 package org.vb.service.utils;
 
 import org.vb.dto.request.CreateReservaDTO;
+import org.vb.dto.request.UpdateReservaDTO;
 import org.vb.dto.response.ReservaResponseDTO;
+import org.vb.enums.EstadoReserva;
 import org.vb.model.entity.Reserva;
 
 import java.time.Instant;
@@ -34,8 +36,12 @@ public class TestDataFactory {
 
     public static Reserva createReservaEntity(){
         return new Reserva(RESERVA_ID, "PENDIENTE", "PRESENCIAL", CLIENTE_ID_FIJO, ENTRENADOR_ID_FIJO, FECHA_RESERVA);
-
     }
 
+    public static UpdateReservaDTO updateReservaDTO(){
+        UpdateReservaDTO dto = new UpdateReservaDTO();
+        dto.setEstado(EstadoReserva.TERMINADA);
+        return dto;
+    }
 
 }

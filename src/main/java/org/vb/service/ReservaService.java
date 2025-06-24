@@ -3,6 +3,7 @@ package org.vb.service;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.vb.dto.request.CreateReservaDTO;
+import org.vb.dto.request.UpdateReservaDTO;
 import org.vb.dto.response.ReservaResponseDTO;
 import org.vb.enums.EstadoReserva;
 import org.vb.enums.ModalidadReserva;
@@ -54,5 +55,15 @@ public class ReservaService {
         Reserva reserva = reservaRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la reserva con ID: " + id));
         return reservaMapper.toResponseDTO(reserva);
+    }
+
+    public ReservaResponseDTO updateReserva(UUID id, UpdateReservaDTO reservaToUpdate) {
+        Reserva existingReserva = reservaRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró al reserva con ID: " + id));
+
+        reservaMapper.updateReservaFromDto(reservaToUpdate, existingReserva);
+
+        Reserva reservaGuardado = reservaRepository.save(existingReserva);
+        return reservaMapper.toResponseDTO(reservaGuardado);
     }
 }
