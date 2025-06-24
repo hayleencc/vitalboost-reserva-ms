@@ -7,8 +7,8 @@ public class ReservaResponseDTO {
     private UUID id;
     private String estado;
     private String modalidad;
-    private UUID clienteId;
-    private UUID entrenadorId;
+    private String clienteId;
+    private String entrenadorId;
     private Instant fechaReserva;
 
     public UUID getId() {
@@ -35,19 +35,19 @@ public class ReservaResponseDTO {
         this.modalidad = modalidad;
     }
 
-    public UUID getClienteId() {
+    public String getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(UUID clienteId) {
+    public void setClienteId(String clienteId) {
         this.clienteId = clienteId;
     }
 
-    public UUID getEntrenadorId() {
+    public String getEntrenadorId() {
         return entrenadorId;
     }
 
-    public void setEntrenadorId(UUID entrenadorId) {
+    public void setEntrenadorId(String entrenadorId) {
         this.entrenadorId = entrenadorId;
     }
 

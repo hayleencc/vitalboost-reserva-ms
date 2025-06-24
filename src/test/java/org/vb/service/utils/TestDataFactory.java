@@ -10,8 +10,8 @@ import java.time.Instant;
 import java.util.UUID;
 
 public class TestDataFactory {
-    public static final UUID CLIENTE_ID_FIJO = UUID.fromString("1d0e247c-51fc-45b0-9f02-bb0f2dfd099f");
-    public static final UUID ENTRENADOR_ID_FIJO = UUID.fromString("2a1b3c4d-51fc-45b0-9f02-bb0f2dfd099f");
+    public static final String CLIENTE_ID_FIJO = "1d0e247c-51fc-45b0-9f02-bb0f2dfd099f";
+    public static final String ENTRENADOR_ID_FIJO = "2a1b3c4d-51fc-45b0-9f02-bb0f2dfd099f";
     public static final UUID RESERVA_ID = UUID.fromString("44b93209-8ee9-4803-a913-82fb36f50c0d");
     public static final Instant FECHA_RESERVA = Instant.parse("2025-06-23T12:00:00.000Z");
 

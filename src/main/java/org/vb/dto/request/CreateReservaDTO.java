@@ -6,7 +6,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class CreateReservaDTO {
     @NotBlank(message = "La modalidad es requerida para la reserva")
@@ -15,11 +14,11 @@ public class CreateReservaDTO {
 
     @NotNull(message = "El ID del cliente es requerido")
     @JsonProperty("clienteId")
-    private UUID clienteId;
+    private String clienteId;
 
     @NotNull(message = "El ID del entrenador es requerido")
     @JsonProperty("entrenadorId")
-    private UUID entrenadorId;
+    private String entrenadorId;
 
     @NotNull(message = "La fecha de reserva es requerida")
     private Instant fechaReserva;
@@ -32,19 +31,19 @@ public class CreateReservaDTO {
         this.modalidad = modalidad;
     }
 
-    public UUID getClienteId() {
+    public String getClienteId() {
         return clienteId;
     }
 
-    public void setClienteId(UUID clienteId) {
+    public void setClienteId(String clienteId) {
         this.clienteId = clienteId;
     }
 
-    public UUID getEntrenadorId() {
+    public String getEntrenadorId() {
         return entrenadorId;
     }
 
-    public void setEntrenadorId(UUID entrenadorId) {
+    public void setEntrenadorId(String entrenadorId) {
         this.entrenadorId = entrenadorId;
     }
 

@@ -42,7 +42,7 @@ public class ReservaController {
             @ApiResponse(responseCode = "200", description = "Reservas del cliente recuperadas correctamente")
     })
     @GetMapping("/cliente/{cliente_id}")
-    public List<ReservaResponseDTO> getAllReservasPorCliente(@PathVariable UUID cliente_id) {
+    public List<ReservaResponseDTO> getAllReservasPorCliente(@PathVariable String cliente_id) {
         return reservaService.getReservasPorCliente(cliente_id);
     }
 
@@ -51,7 +51,7 @@ public class ReservaController {
             @ApiResponse(responseCode = "200", description = "Reservas del entrenador recuperadas correctamente")
     })
     @GetMapping("/entrenador/{entrenador_id}")
-    public List<ReservaResponseDTO> getAllReservasPorEntrenador(@PathVariable UUID entrenador_id) {
+    public List<ReservaResponseDTO> getAllReservasPorEntrenador(@PathVariable String entrenador_id) {
         return reservaService.getReservasPorEntrenador(entrenador_id);
     }
 

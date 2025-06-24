@@ -23,10 +23,10 @@ public class Reserva {
     private String modalidad;
 
     @Column(name = "cliente_id", nullable = false)
-    private UUID clienteId;
+    private String clienteId;
 
     @Column(name = "entrenador_id", nullable = false)
-    private UUID entrenadorId;
+    private String entrenadorId;
 
     @Column(name = "fecha_reserva", nullable = false)
     private Instant fechaReserva;
@@ -37,7 +37,7 @@ public class Reserva {
 
     public Reserva(){}
 
-    public Reserva(UUID id, String estado, String modalidad, UUID clienteId, UUID entrenadorId, Instant fechaReserva) {
+    public Reserva(UUID id, String estado, String modalidad, String clienteId, String entrenadorId, Instant fechaReserva) {
         this.id = id;
         this.estado = estado;
         this.modalidad = modalidad;
@@ -66,19 +66,19 @@ public class Reserva {
         this.modalidad = modalidad;
     }
 
-    public UUID getClienteId() {
+    public String getClienteId() {
         return clienteId;
     }
 
-    public UUID getEntrenadorId() {
+    public String getEntrenadorId() {
         return entrenadorId;
     }
 
-    public void setEntrenadorId(UUID entrenadorId) {
+    public void setEntrenadorId(String entrenadorId) {
         this.entrenadorId = entrenadorId;
     }
 
-    public void setClienteId(UUID clienteId) {
+    public void setClienteId(String clienteId) {
         this.clienteId = clienteId;
     }
 

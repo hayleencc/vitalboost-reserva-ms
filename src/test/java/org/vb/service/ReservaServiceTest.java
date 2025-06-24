@@ -91,7 +91,7 @@ public class ReservaServiceTest {
 
     @Test
     void getReservasPorCliente_siNoExistenCreadas_retornaListaVacia() {
-        UUID clienteId = UUID.randomUUID();
+        String clienteId = "string-como-cliente-id";
         List<Reserva> reservas = new ArrayList<>();
         when(reservaRepository.findByClienteId(clienteId)).thenReturn(reservas);
 
@@ -103,7 +103,7 @@ public class ReservaServiceTest {
 
     @Test
     void getReservasPorCliente_siExistenCreadas_retornaLista() {
-        UUID clienteId= TestDataFactory.CLIENTE_ID_FIJO;
+        String clienteId= TestDataFactory.CLIENTE_ID_FIJO;
         Reserva reserva = TestDataFactory.createReservaEntity();
         ReservaResponseDTO responseDTO = TestDataFactory.reservaResponseDTO();
         List<Reserva> reservas = List.of(reserva);
@@ -120,7 +120,7 @@ public class ReservaServiceTest {
 
     @Test
     void getReservasPorEntrenador_siNoExistenCreadas_retornaListaVacia() {
-        UUID entrenadorId = UUID.randomUUID();
+        String entrenadorId = "string-como-entrenador-id";
         List<Reserva> reservas = new ArrayList<>();
         when(reservaRepository.findByEntrenadorId(entrenadorId)).thenReturn(reservas);
 
@@ -132,7 +132,7 @@ public class ReservaServiceTest {
 
     @Test
     void getReservasPorEntrenador_siExistenCreadas_retornaLista() {
-        UUID entrenadorId= TestDataFactory.ENTRENADOR_ID_FIJO;
+        String entrenadorId= TestDataFactory.ENTRENADOR_ID_FIJO;
         Reserva reserva = TestDataFactory.createReservaEntity();
         ReservaResponseDTO responseDTO = TestDataFactory.reservaResponseDTO();
         List<Reserva> reservas = List.of(reserva);

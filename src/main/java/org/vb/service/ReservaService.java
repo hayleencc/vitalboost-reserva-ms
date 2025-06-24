@@ -37,14 +37,14 @@ public class ReservaService {
         return reservaMapper.toResponseDTO(reservaGuardado);
     }
 
-    public List<ReservaResponseDTO> getReservasPorCliente(UUID id) {
+    public List<ReservaResponseDTO> getReservasPorCliente(String id) {
         List<Reserva> reservas = reservaRepository.findByClienteId(id);
         return reservas.stream()
                 .map(reservaMapper::toResponseDTO)
                 .toList();
     }
 
-    public List<ReservaResponseDTO> getReservasPorEntrenador(UUID id) {
+    public List<ReservaResponseDTO> getReservasPorEntrenador(String id) {
         List<Reserva> reservas = reservaRepository.findByEntrenadorId(id);
         return reservas.stream()
                 .map(reservaMapper::toResponseDTO)
