@@ -35,13 +35,15 @@ Este proyecto implementa un microservicio REST para crear, consultar y actualiza
 4. La aplicación arrancará en `http://localhost:8082`
 5. Para probar los endpoints existentes puedes acceder a ```http://localhost:8082/swagger-ui/index.html```
 
+###### _Nota: en caso de que el frontend tenga asignado otro puerto, agregarlo (o modificarlo) en la propiedad _allowedOrigins_ del archivo `WebConfig`._
+
 ## Testing
 Se puede usar el comando ```mvn test```
 
 
 ## Estructura del proyecto
 Accede a la carpeta `src` y dentro encontraras la carpeta `main`. Luego accedes a `java/org/vb` teniendo como carpetas principales:
-- `controller/`: Archivos de configuración de la aplicación
+- `config/`: Archivos de configuración de la aplicación
 - `controller/`: Controladores REST
 - `service/`: Lógica de negocio
 - `repository/`: Acceso a datos
